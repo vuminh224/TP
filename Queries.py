@@ -1,11 +1,14 @@
 import nltk
 import re
+from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from Document import vectorizer, indexing_terms,stop_words
 
 nltk.download('punkt')
 nltk.download('stopwords')
+
+stop_words = set(stopwords.words('english'))
 
 # Load the document as a string
 with open('CISI_dev.QRY', 'r') as file:
@@ -37,9 +40,9 @@ for query in query_texts:
     processed_tokens_query = []
     for token in tokens:
         token = token.lower()
-        token = stemmer.stem(token)
-        # Remove unwanted characters
         if token not in stop_words and re.match(r'^[a-zA-Z0-9]+$', token):
+            token = stemmer.stem(token)
+            # Remove unwanted characters
             processed_tokens_query.append(token)
     processed_tokens.append(processed_tokens_query)
     # print(processed_tokens_query)

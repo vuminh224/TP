@@ -32,9 +32,9 @@ for document in documents:
     processed_tokens_doc = []
     for token in tokens:
         token = token.lower()
-        token = stemmer.stem(token)
-        # Add processed tokens to the list
-        processed_tokens_doc.append(token)
+        if token not in stop_words:
+            token = stemmer.stem(token)
+            processed_tokens_doc.append(token)
     processed_tokens.append(processed_tokens_doc)
     #each doc has their own tokens has been processed
     #print(processed_tokens_doc)
