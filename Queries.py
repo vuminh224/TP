@@ -21,19 +21,15 @@ for query in query_texts:
     # Extract title if available
     title_match = re.search(r"\.T\n(.+?)\n", query)
     title = title_match.group(1) if title_match else ""
-
     # Remove .A and its content if available
     if re.search(r"\.A\n", query):
         query = re.sub(r"\.A\n(.+?)\n", "", query)
-
     # Extract content if available
     content_match = re.search(r"\.W\n(.+?)\n", query)
     content = content_match.group(1) if content_match else ""
-
     # Remove .B and its content if available
     if re.search(r"\.B\n", query):
         query = re.sub(r"\.B\n(.+?)\n", "", query)
-
     queries.append((title, content))
 
     # Tokenize and preprocess the query
