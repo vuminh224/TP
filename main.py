@@ -7,15 +7,15 @@ from Queries import query_matrix, query_texts
 #print(query_matrix.shape)
 #print(document_matrix.shape)
 
-rel_file_path = 'CISI_dev.REL'
+rel_file_path = 'test.txt'
 # Compute the cosine similarity between the query matrix and the document matrix
 cosine_similarities = cosine_similarity(query_matrix, document_matrix)
 #print(cosine_similarities)
 
 with open(rel_file_path, 'w') as f:
     for i, cosine_similarity in enumerate(cosine_similarities):
-        # Get the top 5 most similar documents
-        most_similar_doc_indices = cosine_similarity.argsort()[::-1][:5]
+        # Get the top 45 most similar documents
+        most_similar_doc_indices = cosine_similarity.argsort()[::-1][:45]
 
         for j, doc_idx in enumerate(most_similar_doc_indices):
             # Write the query number, document number, and similarity score to file
