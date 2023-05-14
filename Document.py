@@ -92,7 +92,7 @@ for i, doc in enumerate(processed_tokens):
 #print(vectors)
 
 # Create a TfidfVectorizer object
-vectorizer = TfidfVectorizer(vocabulary=indexing_terms)
+vectorizer = TfidfVectorizer(vocabulary=indexing_terms, sublinear_tf=True)
 
 # from Document import vectorizer
 # document_matrix = vectorizer.transform([' '.join(tokens) for tokens in processed_tokens])
@@ -111,9 +111,9 @@ idf = np.nan_to_num(idf)
 
 # Apply TF-IDF weighting
 document_matrix = document_matrix * idf
-
+"""
 # Normalize the matrix
+document_matrix = document_matrix.toarray()
 document_matrix /= np.linalg.norm(document_matrix, axis=1)[:, np.newaxis]
 
 # print(document_matrix)
-"""
