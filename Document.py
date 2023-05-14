@@ -94,9 +94,13 @@ for i, doc in enumerate(processed_tokens):
 # Create a TfidfVectorizer object
 vectorizer = TfidfVectorizer(vocabulary=indexing_terms)
 
-# Fit the vectorizer on the processed documents
-vectorizer.fit([' '.join(tokens) for tokens in processed_tokens])
+# from Document import vectorizer
+# document_matrix = vectorizer.transform([' '.join(tokens) for tokens in processed_tokens])
 
+# Fit the vectorizer on the processed documents
+document_matrix = vectorizer.fit_transform([' '.join(tokens) for tokens in processed_tokens])
+
+"""
 # Create a document-term matrix
 document_matrix = np.array([vectors[word] for word in vectors.keys()]).T
 
@@ -111,4 +115,5 @@ document_matrix = document_matrix * idf
 # Normalize the matrix
 document_matrix /= np.linalg.norm(document_matrix, axis=1)[:, np.newaxis]
 
-print(document_matrix)
+# print(document_matrix)
+"""

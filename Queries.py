@@ -4,7 +4,7 @@ from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from Document import vectorizer
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -18,6 +18,7 @@ with open('CISI_dev.QRY', 'r') as file:
 stemmer = PorterStemmer()
 processed_tokens = []
 queries=[]
+# vectorizer = TfidfVectorizer()
 # Print the individual queries but number start from 0 to n-1
 for query in query_texts:
     # Extract title if available
@@ -48,12 +49,10 @@ for query in query_texts:
         if token not in stop_words and re.match(r'^[a-zA-Z0-9]+$', token):
             processed_tokens_query.append(token)
     processed_tokens.append(processed_tokens_query)
-    print(processed_tokens_query)
+    # print(processed_tokens_query)
 
-    query_strings = [' '.join(tokens) for tokens in processed_tokens]
-
-    # Create a TfidfVectorizer object
-    vectorizer = TfidfVectorizer()
+    query_strings = [' '.join(tokens) for tokens in processed_tokens]    
 
     # Fit the vectorizer to the query strings and transform the strings into a sparse matrix
     query_matrix = vectorizer.fit_transform(query_strings)
+    # query_matrix = vectorizer.transform(query_strings)
