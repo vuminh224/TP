@@ -7,7 +7,7 @@ from Queries import query_matrix,query_texts
 #print(query_matrix.shape)
 #print(document_matrix.shape)
 # Set the similarity threshold
-similarity_threshold = 0.41
+similarity_threshold = 0.15
 
 rel_file_path = 'test.txt'
 # Compute the cosine similarity between the query matrix and the document matrix

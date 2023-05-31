@@ -1,3 +1,5 @@
+import string
+
 import nltk
 import re
 import numpy as np
@@ -28,6 +30,8 @@ for document in documents:
     #doc_id, doc_text = queries.split('\n', 1)
     #couper le titre
     #print(document.strip())
+    #document_exported = document.translate(str.maketrans(",", string.punctuation))
+    #print(document_exported)
     tokens = nltk.word_tokenize(document)
     processed_tokens_doc = []
     for token in tokens:
@@ -35,8 +39,12 @@ for document in documents:
         if token not in stop_words:
             token = stemmer.stem(token)
             processed_tokens_doc.append(token)
+    for word in processed_tokens_doc:
+        if word in string.punctuation:
+            processed_tokens_doc.remove(word)
     processed_tokens.append(processed_tokens_doc)
     #each doc has their own tokens has been processed
+    #print(tokens)
     #print(processed_tokens_doc)
 
 for document in processed_tokens:
@@ -46,6 +54,9 @@ for document in processed_tokens:
         else:
             term_frequency[token] = 1
 
+#Trong này, khi mà những từ ngữ không liên quan thì lại có 1 frequency cao
+#nên tốt hơn hết là không dùng cách xem các từ ngữ có frequency cao
+
 #rearrange the word with the most frequency
 #thay vi (...1) (..10) thi sap xep lai
 sorted_terms = sorted(term_frequency.items(), key=lambda x: x[1], reverse=True)
@@ -53,10 +64,9 @@ sorted_terms = sorted(term_frequency.items(), key=lambda x: x[1], reverse=True)
 
 
 # Choose the top k terms as indexing terms
-#loc gia tri co frequency>=k
-k = 100 # NEED TO CHANGE IF NEEDED
+#loc k gia tri co frequency lon nhat
+k = 150 # NEED TO CHANGE IF NEEDED
 indexing_terms = [term[0] for term in sorted_terms[:k]]
-#print(indexing_terms)
 
 #1.3
 
@@ -91,9 +101,12 @@ for i, doc in enumerate(processed_tokens):
             vectors[word][i] += 1
 #print(vectors)
 
+vocab = list(term_frequency.keys())
 # Create a TfidfVectorizer object
-vectorizer = TfidfVectorizer(vocabulary=indexing_terms, sublinear_tf=True)
-
+vectorizer = TfidfVectorizer(vocabulary=vocab, sublinear_tf=True)
+#print(indexing_terms)
+#print(term_frequency)
+#print(sorted_terms)
 # from Document import vectorizer
 # document_matrix = vectorizer.transform([' '.join(tokens) for tokens in processed_tokens])
 
@@ -111,9 +124,10 @@ idf = np.nan_to_num(idf)
 
 # Apply TF-IDF weighting
 document_matrix = document_matrix * idf
-"""
+
 # Normalize the matrix
 document_matrix = document_matrix.toarray()
 document_matrix /= np.linalg.norm(document_matrix, axis=1)[:, np.newaxis]
 
 # print(document_matrix)
+"""

@@ -3,7 +3,7 @@ import re
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
-from Document import vectorizer, indexing_terms,stop_words
+from Document import vectorizer, indexing_terms,stop_words,vocab
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -18,7 +18,7 @@ with open('CISI_dev.QRY', 'r') as file:
 stemmer = PorterStemmer()
 processed_tokens = []
 queries=[]
-vectorizer = TfidfVectorizer(vocabulary=indexing_terms, sublinear_tf=True)
+vectorizer = TfidfVectorizer(vocabulary=vocab, sublinear_tf=True)
 # Print the individual queries but number start from 0 to n-1
 for query in query_texts:
     # Extract title if available
@@ -51,5 +51,5 @@ for query in query_texts:
 
     # Fit the vectorizer to the query strings and transform the strings into a sparse matrix
     #query_matrix = vectorizer.transform([' '.join(tokens) for tokens in processed_tokens_query])
-    query_matrix = vectorizer.fit_transform(query_strings)
+    query_matrix = vectorizer.transform(query_strings)
     # query_matrix = vectorizer.transform(query_strings)
