@@ -51,5 +51,5 @@ for query in query_texts:
 
     # Fit the vectorizer to the query strings and transform the strings into a sparse matrix
     #query_matrix = vectorizer.transform([' '.join(tokens) for tokens in processed_tokens_query])
-    query_matrix = vectorizer.transform(query_strings)
+    query_matrix = vectorizer.fit_transform(query_strings)
     # query_matrix = vectorizer.transform(query_strings)
